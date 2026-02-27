@@ -255,12 +255,12 @@ Based on model insights and feature importance analysis, the following data-driv
 ---
 
 ### 1. Improve Courier Experience
-- Invest in structured **courier training programs** focused on:
+- Invest in structured courier training programs focused on:
   - Professional communication
   - Customer interaction etiquette
   - Safe and efficient delivery handling
-- Introduce **performance scorecards** for delivery personnel based on customer feedback.
-- Implement real-time **delivery feedback collection** after each order.
+- Introduce performance scorecards for delivery personnel based on customer feedback.
+- Implement real-time delivery feedback collection after each order.
 - Use customer ratings to identify high-performing couriers and replicate best practices.
 - Provide incentives or recognition programs tied to customer satisfaction scores.
 
@@ -270,9 +270,9 @@ Improved last-mile experience leading to higher customer trust and repeat usage.
 ---
 
 ###  2. Ensure Order Accuracy
-- Improve **inventory synchronization** between ordering platform and warehouse systems.
+- Improve inventory synchronization between ordering platform and warehouse systems.
 - Implement barcode or automated scanning validation before shipment.
-- Add a **final verification checkpoint** during order packing.
+- Add a final verification checkpoint during order packing.
 - Use historical error data to identify high-risk products or fulfillment stages.
 - Introduce automated alerts for frequent substitution or stock mismatch issues.
 
@@ -284,7 +284,6 @@ Reduction in returns, complaints, and negative customer experiences.
 ###  3. Maintain Delivery Timeliness
 - Optimize logistics routes using data-driven routing algorithms.
 - Analyze peak delivery hours and allocate courier resources dynamically.
-- Monitor delivery performance against **Service Level Agreements (SLAs)**.
 - Provide customers with accurate real-time delivery tracking.
 - Use predictive delay detection to notify customers proactively.
 
@@ -294,7 +293,7 @@ Higher reliability perception and improved customer confidence.
 ---
 
 ###  4. Implement Predictive Monitoring System
-- Deploy the model to generate **customer happiness probability scores** after each order.
+- Deploy the model to generate customer happiness probability scores after each order.
 - Flag customers below a defined satisfaction threshold (e.g., probability < 0.5).
 - Trigger automated workflows such as:
   - Follow-up emails
