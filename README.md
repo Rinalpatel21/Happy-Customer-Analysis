@@ -119,7 +119,7 @@ Models were evaluated using:
 - ROC-AUC
 - Confusion Matrix
 
-## Model Performance – Key Observations (Detailed)
+## Model Performance – Key Observations 
 
 ### Logistic Regression Generalized Well on Test Data
 The Logistic Regression model demonstrated strong generalization capability, meaning its performance remained consistent between training and testing datasets.  
@@ -183,7 +183,7 @@ The model achieved the best balance between predictive performance, interpretabi
 
 ---
 
-## Reasons for Selecting Logistic Regression (Detailed)
+## Reasons for Selecting Logistic Regression 
 
 ###  Strong Generalization
 - Minimal performance gap between training and testing datasets.
@@ -248,7 +248,7 @@ This insight helps prioritize operational improvements.
 
 ---
 
-##  Business Recommendations (Detailed)
+##  Business Recommendations 
 
 Based on model insights and feature importance analysis, the following data-driven recommendations can help improve overall customer happiness and reduce dissatisfaction risk.
 
