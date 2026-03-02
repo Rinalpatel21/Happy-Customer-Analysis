@@ -44,105 +44,79 @@ EDA was performed to understand feature behavior and relationships with customer
 - Compared feature averages between happy vs unhappy customers
 
 ### Key Findings:
-- Dataset slightly unbalanced between happy and unhappy customers
 - Courier satisfaction (X5) and delivery timeliness (X1) showed positive relationship with happiness
+- On-time order delivery (mean = 4.33) and ease of ordering through the app (mean = 4.25) received the highest customer ratings, while expectation of content had the lowest average rating (mean = 2.5), indicating a key improvement area; all features were rated on a consistent 1–5 scale
 - No severe multicollinearity observed among predictors
 
 EDA helped guide model selection and interpretation strategy.
 
-
-# Data Processing & Strategy
-
-To ensure robust and unbiased modeling:
-
-### Data Cleaning
-- Verified no missing values
-- Checked for outliers in rating scale (none outside 1–5 range)
-- Confirmed consistent numeric formatting
-
-### Feature Engineering
-- Maintained ordinal structure of rating variables
-- No categorical encoding required (already numeric)
-
-### Scaling
-- Logistic regression performed well without heavy scaling due to similar feature ranges
-
-### Train-Test Split
-- Used stratified split to preserve class distribution
-- Ensured reliable model evaluation
-
 # Model Approaches
-
 A progressive modeling strategy was applied:
-
 ## Baseline Models
 - Logistic Regression
 - Decision Tree Classifier
-
-Purpose:
-- Establish benchmark performance
-- Maintain model interpretability
 
 ## Advanced & Ensemble Models
 - Random Forest
 - Gradient Boosting
 - Bagging Classifier
-
-Purpose:
-- Improve predictive performance
-- Capture non-linear relationships
+- XGBoost
 
 ## Hyperparameter Tuning
 - Used GridSearchCV
 - Performed cross-validation
-- Optimized:
-  - Tree depth
-  - Minimum samples per split
-  - Class weights
-  - Number of estimators
+
+## Feature Engineering Approach (Approach 4)
+To better represent overall customer sentiment, an additional engineered feature was introduced based on survey responses.
+- A new feature avg_X was created representing the average rating across X1–X6.
+- Assumption: a generally happy customer would provide an average rating around 3 or higher.
+- This aggregated feature captures overall satisfaction and simplifies customer sentiment into a single measurable signal.
 
 # Model Performance
-
 Models were evaluated using:
-
 - Accuracy
 - Precision
 - Recall
 - F1-Score
-- ROC-AUC
+- precision_recall_curve
 - Confusion Matrix
 
 ## Comparison of Model Effectiveness and Generalization
 
 ### Overfitting Tendencies
-Many of the advanced models (Decision Tree untuned, Random Forest, Bagging, XGBoost, AdaBoost) exhibited significant overfitting. Their training performance was very high (e.g., F1-score > 0.8), but this dropped substantially on the test set (e.g., F1-score < 0.6). This indicates that these models learned the training data too well and failed to generalize to new, unseen data.
+- Many of the advanced models (Decision Tree untuned, Random Forest, Bagging, XGBoost, AdaBoost) exhibited significant overfitting. Their training performance was very high (e.g., F1-score > 0.8), but this dropped substantially on the test set (e.g., F1-score < 0.6). This indicates that these models learned the training data too well and failed to generalize to new, unseen data.
 
 ### Logistic Regression Models
-The Logistic Regression models (both statsmodels and sklearn implementations) showed much better generalization. The difference between training and test set metrics was relatively small, suggesting they are not overfitting. Although their raw performance metrics (Accuracy, F1-score) are not as high as the overfit training scores of other models, their consistent performance makes them more reliable.
+- The Logistic Regression model showed much better generalization. The difference between training and test set metrics was relatively small, suggesting they are not overfitting. Although their raw performance metrics (Accuracy, F1-score) are not as high as the overfit training scores of other models, their consistent performance makes them more reliable.
 
 ### Impact of X_mean Feature
-The statsmodels Logistic Regression using only X_mean as a predictor achieved a remarkable recall of **0.905** on the test set. This highlights the potential simplicity in predicting happiness if an aggregate score is sufficiently informative. However, its precision is lower, meaning it might flag many customers as happy who are not.
+- The statsmodels Logistic Regression using only X_mean as a predictor achieved a remarkable recall of **0.905** on the test set. This highlights the potential simplicity in predicting happiness if an aggregate score is sufficiently informative. However, its precision is lower, meaning it might flag many customers as happy who are not.
 
 ### Optimal Threshold Application
-Applying an optimal threshold (**0.45**) to the statsmodels Logistic Regression model (with all features) significantly boosted recall on the test set to **0.810**, while maintaining a reasonable F1-score of **0.680**. This demonstrates the importance of threshold tuning for specific optimization goals.
-
-### sklearn Logistic Regression Performance
-The sklearn Logistic Regression (with `class_weight='balanced'`) showed stable performance, with a test recall of **0.619**. Removing feature X6 from this model resulted in very similar performance (test recall **0.619**), suggesting X6 might not be a crucial predictor.
+- Applying an optimal threshold (**0.45**) to the Logistic Regression model (with all features) significantly boosted recall on the test set to **0.810**, while maintaining a reasonable F1-score of **0.680**. This demonstrates the importance of threshold tuning for specific optimization goals.
 
 ## Final Model Selection
-
-Given the goal of maximizing Recall (to predict as many happy customers as possible to take action), the Logistic Regression model using only X_mean stands out with a test recall of **0.905**. While its precision (**0.633**) is not the highest, its ability to identify a large proportion of truly happy customers is superior. If the company prioritizes identifying most happy customers, even at the cost of some false positives, this model is the most effective.
-
-Alternatively, Logistic Regression with all features and an optimal threshold of **0.45** also performed strongly with a test recall of **0.810** and a slightly better F1-score of **0.680**, offering a good balance.
-
-**Conclusion:**  
-Logistic Regression provided the optimal combination of predictive stability, explainability, and business relevance, making it the most suitable model for deployment in customer happiness prediction.
+- Logistic Regression with all features and an optimal threshold of **0.45** also performed strongly with a test recall of **0.810** and a slightly better precision of **0.60**, offering a good balance.
+- Strong and consistent results across both training and testing datasets Indicates low overfitting and good bias–variance balance
+- The model achieved the best balance between predictive performance, interpretability, and business applicability.
+   Model coefficients directly explain how each feature affects customer happiness.
 
 # Feature Importance Insights
+**Logistic Regression (Odds and Percentage Change)**:
+- X5 ('I am satisfied with my courier') showed the largest positive impact, increasing the odds of a happy customer by ~33% for every one-unit increase in rating.
+- X1 ('my order was delivered on time') followed closely, increasing the odds by ~31%.
+- X3 ('I ordered everything I wanted to order') increased the odds by ~28%.
+- X4 ('I paid a good price for my order') increased the odds by ~21%.
+- X6 ('the app makes ordering easy for me') had a small positive impact, increasing the odds by ~8%.
+- X2 ('contents of my order was as I expected') had a negative impact, decreasing the odds by ~9%.
+
+**Decision Tree Feature Importance**: The Decision Tree identified X2 (0.260), X3 (0.219), and X1 (0.162) as the most important features. This differs slightly from logistic regression, which highlights that different models might value features differently based on their internal mechanisms.
+
+**Impact of Removing X6**: When X6 was removed, the sklearn Logistic Regression model's performance metrics (Accuracy, Recall, Precision, F1) remained almost identical on both training and test sets. This empirically supports the notion that X6 might not be a strong individual predictor of customer happiness.
+
 ### Most Important Features
-Based on the statsmodels Logistic Regression (which offers interpretable coefficients), X5 (courier satisfaction) and X1 (on-time delivery) are the most important features positively impacting customer happiness. X3 (ordered everything wanted) and X4 (good price) are also significant. X2 ('contents as expected') is important, albeit negatively correlated, indicating it's still a significant factor in dissatisfaction.
-### Minimal Set of Attributes
-A minimal set of attributes that would preserve most information about customer happiness would likely include X1, X2, X3, X4, and X5. These features consistently show a positive and relatively strong association with customer happiness across models (especially logistic regression's odds ratios). X2 is important as it indicates a strong negative impact
+Based on the statsmodel Logistic Regression (which offers interpretable coefficients), X5 (courier satisfaction) and X1 (on-time delivery) are the most important features positively impacting customer happiness. X3 (ordered everything wanted) and X4 (good price) are also significant. X2 ('contents as expected') is important, albeit negatively correlated, indicating it's still a significant factor in dissatisfaction.
+
 ### Question to Remove
 X6 ('the app makes ordering easy for me') is the strongest candidate for removal in the next survey. Its impact on customer happiness, as measured by the odds ratio in logistic regression, is the smallest among all positive predictors (8% increase). More importantly, its removal from the sklearn Logistic Regression model resulted in virtually no change in performance metrics, indicating it provides minimal unique predictive value to this model.
 
