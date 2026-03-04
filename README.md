@@ -90,13 +90,13 @@ Models were evaluated using:
 - The Logistic Regression model showed much better generalization. The difference between training and test set metrics was relatively small, suggesting they are not overfitting. Although their raw performance metrics (Accuracy, F1-score) are not as high as the overfit training scores of other models, their consistent performance makes them more reliable.
 
 ### Impact of X_mean Feature
-- The statsmodels Logistic Regression using only X_mean as a predictor achieved a remarkable recall of **0.905** on the test set. This highlights the potential simplicity in predicting happiness if an aggregate score is sufficiently informative. However, its precision is lower, meaning it might flag many customers as happy who are not.
+- The statsmodels Logistic Regression using only X_mean as a predictor achieved a remarkable recall of **0.905** on the test set. This highlights the potential simplicity in predicting happiness if an aggregate score is sufficiently informative. 
 
 ### Optimal Threshold Application
 - Applying an optimal threshold (**0.45**) to the Logistic Regression model (with all features) significantly boosted recall on the test set to **0.810**, while maintaining a reasonable F1-score of **0.680**. This demonstrates the importance of threshold tuning for specific optimization goals.
 
 ## Final Model Selection
-- Logistic Regression with all features and an optimal threshold of **0.45** also performed strongly with a test recall of **0.810** and a slightly better precision of **0.60**, offering a good balance.
+- Logistic Regression with all features and an optimal threshold of **0.45** also performed strongly with a test recall of **0.810** and a slightly better precision of **0.59**, offering a good balance.
 - Strong and consistent results across both training and testing datasets Indicates low overfitting and good bias–variance balance
 - The model achieved the best balance between predictive performance, interpretability, and business applicability.
    Model coefficients directly explain how each feature affects customer happiness.
@@ -111,8 +111,6 @@ Models were evaluated using:
 - X2 ('contents of my order was as I expected') had a negative impact, decreasing the odds by ~9%.
 
 **Decision Tree Feature Importance**: The Decision Tree identified X2 (0.260), X3 (0.219), and X1 (0.162) as the most important features. This differs slightly from logistic regression, which highlights that different models might value features differently based on their internal mechanisms.
-
-**Impact of Removing X6**: When X6 was removed, the sklearn Logistic Regression model's performance metrics (Accuracy, Recall, Precision, F1) remained almost identical on both training and test sets. This empirically supports the notion that X6 might not be a strong individual predictor of customer happiness.
 
 ### Most Important Features
 Based on the statsmodel Logistic Regression (which offers interpretable coefficients), X5 (courier satisfaction) and X1 (on-time delivery) are the most important features positively impacting customer happiness. X3 (ordered everything wanted) and X4 (good price) are also significant. X2 ('contents as expected') is important, albeit negatively correlated, indicating it's still a significant factor in dissatisfaction.
