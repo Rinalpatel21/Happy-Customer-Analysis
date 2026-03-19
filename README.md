@@ -57,13 +57,13 @@ The project workflow can be summarized in the following steps:
 
 
 ## Insights and Recommendations
-- Enhance Courier Experience: Final touchpoint has the highest impact—train couriers, track ratings, and reward top performers to quickly boost customer satisfaction.  
+- Enhance Courier Experience: Courier interaction is the final customer touchpoint and has the greatest impact on satisfaction. Improve communication and professionalism through training, track ratings, and reward top performers to quickly boost customer satisfaction.  
 
 - Improve Delivery Reliability: Optimize routes, enable real-time tracking, and communicate delays proactively to build trust and reduce frustration.  
 
 - Reduce Expectation Gaps: Align orders with expectations through better product info, real-time inventory, and early communication on substitutions.  
 
-- Remove X6 Feature: “Ease of ordering” adds minimal predictive value (~8%) and can be removed without impacting model performance. Business Note: Low model impact ≠ low importance—app usability matters, but it doesn’t differentiate happy vs. unhappy customers in this dataset.  
+- Remove X6 Feature: “Ease of ordering” adds minimal predictive value (~8%) and can be removed without impacting model performance. Business Note: Low model impact ≠ low importance, app usability matters, but it doesn’t differentiate happy vs. unhappy customers in this dataset.  
 
 
 
